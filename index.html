@@ -1,0 +1,1139 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Лето в РМИ</title>
+    <style>
+      @font-face {
+        font-family: Soledago;
+        src:
+          url("assets/fonts/Soledago.woff2") format("woff2"),
+          url("assets/fonts/Soledago.woff") format("woff"),
+          url("assets/fonts/Soledago.ttf") format("truetype"),
+          url("assets/fonts/Soledago.otf") format("opentype");
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: RalewayLocal;
+        src:
+          url("assets/fonts/Raleway.woff2") format("woff2"),
+          url("assets/fonts/Raleway.woff") format("woff"),
+          url("assets/fonts/Raleway.ttf") format("truetype"),
+          url("assets/fonts/Raleway.otf") format("opentype");
+        font-display: swap;
+      }
+
+      :root {
+        --dark: #8299b9;
+        --green: #ececec;
+        --cream: #f8e4d0;
+        --accent: #dc7d2a;
+        --white: rgba(255, 255, 255, 0.9);
+        --glass: rgba(255, 255, 255, 0.16);
+        --line: rgba(255, 255, 255, 0.42);
+        --card-w: clamp(250px, 18.4vw, 340px);
+        --card-h: clamp(185px, 13vw, 240px);
+        --ease: cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        overflow: hidden;
+        background: var(--dark);
+        color: #fff;
+        font-family: RalewayLocal, Raleway, Arial, sans-serif;
+        cursor: auto;
+      }
+
+      button,
+      a {
+        font: inherit;
+        cursor: inherit;
+      }
+
+      body,
+      p,
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      span,
+      div {
+        cursor: default;
+        user-select: none;
+      }
+
+      .page {
+        position: relative;
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+        background: var(--dark);
+      }
+
+      .screen {
+        position: absolute;
+        inset: 0;
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+        transition:
+          transform 1s cubic-bezier(0.77, 0, 0.18, 1),
+          opacity 0.75s ease,
+          filter 0.75s ease;
+      }
+
+      .hero-screen {
+        z-index: 2;
+        transform: translateY(0);
+      }
+
+      .events-screen {
+        z-index: 1;
+        transform: translateY(100%);
+        padding: clamp(70px, 14vh, 70px) 0 clamp(24px, 5vh, 54px);
+      }
+
+      .page.show-events .hero-screen {
+        transform: translateY(-100%);
+        opacity: 0.35;
+        filter: blur(8px);
+      }
+
+      .page.show-events .events-screen {
+        transform: translateY(0);
+      }
+
+      .hero-bg,
+      .events-bg {
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(120deg, rgba(7, 29, 27, 0.58), rgba(7, 29, 27, 0.26)),
+          url("assets/images/hero.jpg") center / cover no-repeat;
+        filter: blur(5px) saturate(1.08);
+        transform: scale(1.04);
+      }
+
+      .hero-bg::after,
+      .events-bg::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(
+            circle at 18% 22%,
+            rgba(253, 197, 95, 0.28),
+            transparent 34%
+          ),
+          radial-gradient(
+            circle at 82% 72%,
+            rgba(255, 255, 255, 0.15),
+            transparent 28%
+          ),
+          linear-gradient(180deg, rgba(7, 29, 27, 0.08), rgba(7, 29, 27, 0.72));
+      }
+
+      .events-bg {
+        opacity: 0.72;
+        filter: blur(12px) saturate(0.92);
+      }
+
+      .events-bg::after {
+        background:
+          linear-gradient(180deg, rgba(7, 29, 27, 0.9), rgba(7, 29, 27, 0.68)),
+          radial-gradient(
+            circle at 72% 24%,
+            rgba(253, 197, 95, 0.22),
+            transparent 34%
+          );
+      }
+
+      .glass-island {
+        position: absolute;
+        z-index: 30;
+        top: clamp(33px, 2vh, 150px);
+        left: 50%;
+        transform: translateX(-50%);
+        min-height: 58px;
+        padding: 10px 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid rgba(189, 189, 189, 0.11);
+        border-radius: 999px;
+        background: #ffffff57;
+        backdrop-filter: blur(22px);
+        -webkit-backdrop-filter: blur(22px);
+        border-radius: 30px;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        box-shadow:
+          0 8px 32px rgba(0, 0, 0, 0.1),
+          inset 0 1px 0 rgba(255, 255, 255, 0.5),
+          inset 0 -1px 0 rgba(255, 255, 255, 0.1),
+          inset 0 0 0px 0px rgba(255, 255, 255, 0);
+        overflow: hidden;
+        transition:
+          top 0.9s cubic-bezier(0.77, 0, 0.18, 1),
+          transform 0.9s cubic-bezier(0.77, 0, 0.18, 1),
+          min-height 0.45s ease,
+          padding 0.45s ease;
+      }
+
+      .island-label {
+        position: relative;
+        padding: 0 22px;
+        font-size: 20px;
+        font-weight: 300;
+        letter-spacing: 0.02em;
+        white-space: nowrap;
+      }
+
+      .tabs {
+        position: relative;
+        display: none;
+        gap: 8px;
+      }
+
+      .hero-island .tabs {
+        display: none;
+      }
+
+      .events-island {
+        background: #ffffff57;
+        backdrop-filter: blur(22px);
+        -webkit-backdrop-filter: blur(22px);
+        border-radius: 30px;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        box-shadow:
+          0 8px 32px rgba(0, 0, 0, 0.1),
+          inset 0 1px 0 rgba(255, 255, 255, 0.5),
+          inset 0 -1px 0 rgba(255, 255, 255, 0.1),
+          inset 0 0 0px 0px rgba(255, 255, 255, 0);
+        top: 26px;
+      }
+
+      .events-island .island-label {
+        display: none;
+      }
+      .events-island .tabs {
+        display: flex;
+      }
+
+      .tab {
+        height: 38px;
+        border: 0;
+        border-radius: 999px;
+        padding: 0 18px;
+        background: rgba(255, 255, 255, 0.12);
+        color: #fff;
+        font-weight: 800;
+        cursor: pointer;
+        transition:
+          transform 0.25s var(--ease),
+          background 0.25s ease,
+          color 0.25s ease;
+      }
+
+      .tab:hover,
+      .tab.is-active {
+        background: rgba(255, 255, 255, 0.9);
+        color: var(--dark);
+        transform: translateY(-1px);
+      }
+
+      .hero-content {
+        position: relative;
+        z-index: 3;
+        height: 100%;
+        padding: 9vh 7vw;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+      }
+
+      .snake-title {
+        margin: 0 0 34px;
+        color: var(--cream);
+        font-family: Soledago, Impact, sans-serif;
+        font-size: clamp(72px, 13vw, 240px);
+        line-height: 0.82;
+        letter-spacing: 0.025em;
+        white-space: nowrap;
+        text-shadow: 0 14px 48px rgba(0, 0, 0, 0.35);
+      }
+
+      .snake-title {
+        position: relative;
+        display: inline-flex;
+        gap: 0.04em;
+        transform: translateX(-120vw) rotate(-7deg) translateY(20px);
+        opacity: 0;
+        animation: snakeTitleIn 3.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      }
+
+      .snake-title span {
+        display: inline-block;
+        animation: snakeWave 5.8s ease-in-out infinite;
+        animation-delay: calc(var(--i) * 0.08s);
+      }
+
+      @keyframes snakeTitleIn {
+        0% {
+          opacity: 0;
+          transform: translateX(-120vw) rotate(-4deg) translateY(18px);
+        }
+
+        72% {
+          opacity: 1;
+          transform: translateX(1.2vw) rotate(0.8deg) translateY(-2px);
+        }
+
+        100% {
+          opacity: 1;
+          transform: translateX(0) rotate(0deg) translateY(0);
+        }
+      }
+
+      @keyframes snakeWave {
+        0%,
+        100% {
+          transform: translateY(calc(var(--wave-y) * 0.11px))
+            rotate(calc(var(--rot) * 0.08deg));
+        }
+
+        50% {
+          transform: translateY(calc(var(--wave-y) * -0.11px))
+            rotate(calc(var(--rot) * -0.08deg));
+        }
+      }
+
+      .hero-text {
+        max-width: 1120px;
+        margin: 0 auto;
+        color: rgba(255, 255, 255, 0.94);
+        font-size: clamp(18px, 2vw, 28px);
+        font-size: 28px;
+        font-weight: 300;
+        line-height: 1.45;
+        text-wrap: balance;
+      }
+
+      .scroll-hint {
+        position: absolute;
+        z-index: 4;
+        left: 50%;
+        bottom: 34px;
+        transform: translateX(-50%);
+        border: 1px solid rgba(255, 255, 255, 0.42);
+        border-radius: 999px;
+        padding: 14px 24px;
+        background: #ffffff57;
+        backdrop-filter: blur(22px);
+        -webkit-backdrop-filter: blur(22px);
+        border-radius: 26px;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        box-shadow:
+          0 8px 32px rgba(0, 0, 0, 0.1),
+          inset 0 1px 0 rgba(255, 255, 255, 0.5),
+          inset 0 -1px 0 rgba(255, 255, 255, 0.1),
+          inset 0 0 0px 0px rgba(255, 255, 255, 0);
+        color: #fff;
+        font-weight: 300;
+        font-size: 16px;
+        cursor: pointer;
+        animation: pulse 1.8s infinite;
+      }
+
+      @keyframes pulse {
+        50% {
+          transform: translateX(-50%) translateY(-6px);
+        }
+      }
+
+      .tab-description {
+        position: relative;
+        z-index: 4;
+        max-width: 900px;
+        min-height: 0;
+        margin: 0 auto 28px;
+        padding: 18px 26px;
+        border: 1px solid rgba(255, 255, 255, 0.28);
+        border-radius: 28px;
+        background: rgba(255, 255, 255, 0.12);
+        backdrop-filter: blur(18px);
+        color: rgba(255, 255, 255, 0.94);
+        text-align: center;
+        font-size: 18px;
+        line-height: 1.4;
+        opacity: 0;
+        transform: translateY(-12px);
+        pointer-events: none;
+        transition:
+          opacity 0.35s ease,
+          transform 0.35s ease,
+          min-height 0.35s ease;
+      }
+
+      .tab-description.is-visible {
+        min-height: 62px;
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .marquee-grid {
+        position: relative;
+        z-index: 3;
+        display: flex;
+        flex-direction: column;
+        gap: clamp(18px, 3vh, 32px);
+      }
+
+      .marquee-row {
+        position: relative;
+        z-index: 1;
+        width: max-content;
+        display: flex;
+        gap: clamp(18px, 1.6vw, 28px);
+        animation: marquee var(--speed, 38s) linear infinite;
+        will-change: transform;
+      }
+
+      .marquee-row.reverse {
+        animation-direction: reverse;
+      }
+      .marquee-row.is-static {
+        width: 100%;
+        justify-content: center;
+        animation: none;
+      }
+      .marquee-row.is-paused {
+        animation-play-state: paused;
+      }
+      .marquee-row.is-hovered {
+        z-index: 40;
+      }
+      .page.has-open-card .marquee-row {
+        animation-play-state: paused;
+      }
+
+      @keyframes marquee {
+        to {
+          transform: translateX(-50%);
+        }
+      }
+
+      .event-card {
+        width: var(--card-w);
+        height: var(--card-h);
+        position: relative;
+        flex: 0 0 auto;
+        perspective: 1200px;
+        transition:
+          transform 0.35s var(--ease),
+          filter 0.35s ease;
+        cursor: pointer;
+      }
+
+      .event-card:hover {
+        z-index: 80;
+        transform: scale(1.3);
+      }
+
+      .event-card.is-flipped {
+        z-index: 12;
+        transform: scale(1.16);
+      }
+
+      .event-card.is-modal {
+        position: fixed;
+        z-index: 120;
+        left: 50%;
+        top: 50%;
+        width: min(860px, 78vw);
+        height: min(560px, 72vh);
+        transform: translate(-50%, -50%) scale(1);
+      }
+
+      .event-card.is-modal:hover {
+        transform: translate(-50%, -50%) scale(1);
+      }
+
+      .event-card.is-source-hidden {
+        opacity: 0.18;
+      }
+
+      .page.has-open-card::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: 90;
+        background: rgba(7, 29, 27, 0.42);
+        backdrop-filter: blur(14px);
+        animation: overlayIn 0.35s ease forwards;
+      }
+
+      @keyframes overlayIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      .card-inner {
+        position: absolute;
+        inset: 0;
+        transform-style: preserve-3d;
+        transition: transform 0.75s var(--ease);
+      }
+
+      .event-card.is-flipped .card-inner {
+        transform: rotateY(180deg);
+      }
+
+      .card-face {
+        position: absolute;
+        inset: 0;
+        padding: 20px;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.34);
+        border-radius: 13px;
+        background: #8299b9;
+        backdrop-filter: blur(22px);
+        -webkit-backdrop-filter: blur(22px);
+        border-radius: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        box-shadow:
+          0 8px 32px rgba(0, 0, 0, 0.1),
+          inset 0 1px 0 rgba(255, 255, 255, 0.5),
+          inset 0 -1px 0 rgba(255, 255, 255, 0.1),
+          inset 0 0 0px 0px rgba(255, 255, 255, 0);
+        backface-visibility: hidden;
+        transition:
+          border-color 0.3s ease,
+          box-shadow 0.3s ease;
+      }
+
+      .card-face::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: -2;
+        /* background: var(--img), linear-gradient(135deg, #184840, #94652e); */
+        background-size: cover;
+        background-position: center;
+        opacity: 0.36;
+        transition:
+          opacity 0.3s ease,
+          transform 0.3s ease;
+      }
+
+      .card-face::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        /* background: linear-gradient(
+          180deg,
+          rgba(7, 29, 27, 0.08),
+          rgba(7, 29, 27, 0.75)
+        ); */
+      }
+
+      .event-card:hover .card-face {
+        box-shadow: 0 28px 80px rgba(0, 0, 0, 0.38);
+      }
+
+      .event-card:hover .card-face::before {
+        opacity: 0.48;
+        transform: scale(1.05);
+      }
+
+      .card-front {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      .card-date {
+        color: var(--cream);
+        font-size: 16px;
+        font-weight: 900;
+      }
+
+      .card-title {
+        margin: 0;
+        font-size: clamp(20px, 1.55vw, 30px);
+        font-weight: 950;
+        line-height: 1.02;
+        text-wrap: balance;
+      }
+
+      .card-type {
+        align-self: flex-start;
+        border-radius: 999px;
+        padding: 7px 11px;
+        background: rgba(255, 255, 255, 0.16);
+        font-size: 12px;
+        font-weight: 950;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      .card-back {
+        display: grid;
+        grid-template-rows: auto 1fr auto;
+        gap: 10px;
+        transform: rotateY(180deg);
+      }
+
+      .close-card {
+        position: absolute;
+        top: 10px;
+        right: 12px;
+        width: 50px;
+        height: 50px;
+        border: 0;
+        border-radius: 50%;
+        background: var(--cream);
+        color: var(--dark);
+        font-size: 64px;
+        cursor: pointer;
+      }
+      .close-card span {
+        position: relative;
+        top: -17px;
+      }
+      .back-title {
+        padding-right: 42px;
+        font-size: clamp(28px, 2vw, 42px);
+        font-weight: 950;
+        line-height: 1.08;
+      }
+
+      .back-text {
+        overflow: auto;
+        padding-right: 4px;
+        font-size: clamp(16px, 1vw, 20px);
+        line-height: 1.35;
+      }
+
+      .back-text::-webkit-scrollbar {
+        width: 3px;
+      }
+      .back-text::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.45);
+        border-radius: 20px;
+      }
+
+      .back-actions {
+        display: flex;
+        gap: 8px;
+      }
+
+      .back-actions a {
+        flex: 1;
+        border-radius: 999px;
+        padding: 14px 14px;
+        background: rgba(255, 255, 255, 0.9);
+        color: var(--dark);
+        text-align: center;
+        text-decoration: none;
+        font-size: 18px;
+        font-weight: 950;
+        cursor: pointer;
+        transition:
+          transform 0.2s ease,
+          background 0.2s ease;
+      }
+
+      .back-actions a:hover {
+        transform: translateY(-2px);
+      }
+      .back-actions a.secondary {
+        background: rgba(253, 197, 95, 0.92);
+      }
+
+      @media (max-width: 900px) {
+        html,
+        body {
+          cursor: auto;
+        }
+        .cursor {
+          display: none;
+        }
+        .glass-island {
+          width: calc(100vw - 24px);
+          border-radius: 28px;
+        }
+        .tabs {
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+        .tab {
+          height: 34px;
+          padding: 0 12px;
+          font-size: 12px;
+          cursor: pointer;
+        }
+        .snake-title {
+          white-space: normal;
+        }
+        .events-screen {
+          padding-top: 132px;
+        }
+        .tab-description {
+          margin-right: 12px;
+          margin-left: 12px;
+          font-size: 14px;
+        }
+        .event-card:hover {
+          transform: scale(1.08);
+        }
+        .scroll-hint,
+        .event-card,
+        .close-card,
+        .back-actions a {
+          cursor: pointer;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page" id="page">
+      <section class="screen hero-screen is-active" id="hero">
+        <div class="hero-bg"></div>
+
+        <div class="glass-island hero-island" id="island">
+          <div class="island-label">Фестиваль для детей и молодежи</div>
+          <div class="tabs" aria-label="Фильтр мероприятий">
+            <button class="tab is-active" data-tab="all" type="button">
+              Все мероприятия
+            </button>
+            <button class="tab" data-tab="day" type="button">
+              Дневная программа
+            </button>
+            <button class="tab" data-tab="evening" type="button">
+              Вечерняя программа
+            </button>
+            <button class="tab" data-tab="festival" type="button">
+              Фестивали
+            </button>
+          </div>
+        </div>
+
+        <div class="hero-content">
+          <h1 class="snake-title" data-snake>ЛЕТО В РМИ</h1>
+          <p class="hero-text">
+            «Лето в РМИ» — единственный в Тверской области фестиваль, который
+            длится всё лето. В программе — регулярные культурно-массовые
+            мероприятия для всей семьи: от уличных кинопоказов до спортивных
+            состязаний.
+          </p>
+        </div>
+
+        <button class="scroll-hint" id="goEvents" type="button">
+          К мероприятиям
+        </button>
+      </section>
+
+      <section class="screen events-screen" id="events">
+        <div class="events-bg"></div>
+
+        <div class="glass-island events-island">
+          <div class="island-label">Фестиваль для детей и молодежи</div>
+          <div class="tabs" aria-label="Фильтр мероприятий">
+            <button class="tab is-active" data-tab="all" type="button">
+              Все мероприятия
+            </button>
+            <button class="tab" data-tab="day" type="button">
+              Дневная программа
+            </button>
+            <button class="tab" data-tab="evening" type="button">
+              Вечерняя программа
+            </button>
+            <button class="tab" data-tab="festival" type="button">
+              Фестивали
+            </button>
+          </div>
+        </div>
+
+        <div class="tab-description" id="tabDescription"></div>
+        <div class="marquee-grid" id="marqueeGrid"></div>
+      </section>
+    </main>
+
+    <script>
+      const EVENTS = [
+        {
+          title: "Фестиваль детства и юности",
+          category: "festival",
+          date: "01 июня 2026",
+          day: "Понедельник",
+          description:
+            "Открытие летней программы: активности для детей, молодежи и семейной аудитории.",
+          image: "assets/images/event-1.jpg",
+          registerUrl: "#register",
+          detailsUrl: "#details",
+        },
+        {
+          title: "Открытие выставки",
+          category: "day",
+          date: "02 июня 2026",
+          day: "Вторник",
+          description:
+            "Дневной культурный формат с участием гостей и тематическими активностями.",
+          image: "assets/images/event-2.jpg",
+          registerUrl: "#register",
+          detailsUrl: "#details",
+        },
+        {
+          title: "Кинопоказ под открытым небом",
+          category: "evening",
+          date: "03 июня 2026",
+          day: "Среда",
+          description: "Вечерний кинопоказ для всей семьи в летней атмосфере.",
+          image: "assets/images/event-3.jpg",
+          registerUrl: "#register",
+          detailsUrl: "#details",
+        },
+        {
+          title: "Спортивные состязания",
+          category: "day",
+          date: "04 июня 2026",
+          day: "Четверг",
+          description:
+            "Активная дневная программа: командные игры, соревнования и движение.",
+          image: "assets/images/event-4.jpg",
+          registerUrl: "#register",
+          detailsUrl: "#details",
+        },
+        {
+          title: "Творческий мастер-класс",
+          category: "day",
+          date: "05 июня 2026",
+          day: "Пятница",
+          description:
+            "Практическое занятие для детей и молодежи с готовым результатом на выходе.",
+          image: "assets/images/event-5.jpg",
+          registerUrl: "#register",
+          detailsUrl: "#details",
+        },
+        {
+          title: "Вечер музыки",
+          category: "evening",
+          date: "06 июня 2026",
+          day: "Суббота",
+          description:
+            "Легкий музыкальный вечер с живой атмосферой и встречей аудитории.",
+          image: "assets/images/event-6.jpg",
+          registerUrl: "#register",
+          detailsUrl: "#details",
+        },
+        {
+          title: "Семейный фестиваль",
+          category: "festival",
+          date: "07 июня 2026",
+          day: "Воскресенье",
+          description: "Крупный семейный день с несколькими зонами активности.",
+          image: "assets/images/event-7.jpg",
+          registerUrl: "#register",
+          detailsUrl: "#details",
+        },
+        {
+          title: "Игротека",
+          category: "day",
+          date: "08 июня 2026",
+          day: "Понедельник",
+          description:
+            "Настольные и командные игры для спокойного дневного участия.",
+          image: "assets/images/event-8.jpg",
+          registerUrl: "#register",
+          detailsUrl: "#details",
+        },
+        {
+          title: "Подкаст с гостями",
+          category: "evening",
+          date: "09 июня 2026",
+          day: "Вторник",
+          description:
+            "Вечерняя встреча в формате живого разговора с приглашенными участниками.",
+          image: "assets/images/event-1.jpg",
+          registerUrl: "#register",
+          detailsUrl: "#details",
+        },
+        {
+          title: "Турнир по уличному волейболу",
+          category: "day",
+          date: "10 июня 2026",
+          day: "Среда",
+          description: "Динамичный спортивный турнир на открытой площадке.",
+          image: "assets/images/event-2.jpg",
+          registerUrl: "#register",
+          detailsUrl: "#details",
+        },
+        {
+          title: "Молодежный DJ-сет",
+          category: "evening",
+          date: "11 июня 2026",
+          day: "Четверг",
+          description:
+            "Вечерняя музыкальная программа для молодежной аудитории.",
+          image: "assets/images/event-3.jpg",
+          registerUrl: "#register",
+          detailsUrl: "#details",
+        },
+        {
+          title: "День молодежи",
+          category: "festival",
+          date: "27 июня 2026",
+          day: "Суббота",
+          description:
+            "Фестивальный день с насыщенной программой и центральными событиями.",
+          image: "assets/images/event-4.jpg",
+          registerUrl: "#register",
+          detailsUrl: "#details",
+        },
+      ];
+
+      const DESCRIPTIONS = {
+        all: "",
+        day: "Дневная программа — активные, спортивные, творческие и семейные форматы, которые удобно посещать в течение дня.",
+        evening:
+          "Вечерняя программа — кинопоказы, музыка, камерные встречи и атмосферные события после дневной активности.",
+        festival:
+          "Фестивали — крупные тематические дни и специальные события, которые собирают вокруг себя основную летнюю аудиторию.",
+      };
+
+      const CATEGORY_LABELS = {
+        day: "Дневная",
+        evening: "Вечерняя",
+        festival: "Фестиваль",
+      };
+
+      const page = document.getElementById("page");
+      let openedCard = null;
+      let sourceCard = null;
+      const grid = document.getElementById("marqueeGrid");
+      const desc = document.getElementById("tabDescription");
+
+      let lock = false;
+
+      function initSnake() {
+        const title = document.querySelector("[data-snake]");
+        const chars = [...title.textContent];
+        title.textContent = "";
+
+        chars.forEach((ch, index) => {
+          const span = document.createElement("span");
+          span.textContent = ch === " " ? " " : ch;
+          span.style.setProperty("--i", index);
+          span.style.setProperty(
+            "--wave-y",
+            Math.round(Math.sin(index * 0.85) * 28),
+          );
+          span.style.setProperty(
+            "--wave-x",
+            Math.round(Math.cos(index * 0.7) * 18),
+          );
+          span.style.setProperty(
+            "--rot",
+            Math.round(Math.sin(index * 0.9) * 5),
+          );
+
+          title.appendChild(span);
+        });
+      }
+
+      function chunkRows(items) {
+        const rows = [[], [], []];
+        items.forEach((item, index) => rows[index % 3].push(item));
+        return rows.map((row) => (row.length ? row : items.slice(0, 6)));
+      }
+
+      function cardTemplate(event) {
+        return `
+        <article class="event-card" data-card style="--img:url('${event.image}')">
+          <div class="card-inner">
+            <div class="card-face card-front">
+              <div class="card-date">${event.date} · ${event.day}</div>
+              <h3 class="card-title">${event.title}</h3>
+              <div class="card-type">${CATEGORY_LABELS[event.category]}</div>
+            </div>
+
+            <div class="card-face card-back">
+              <button class="close-card" type="button" aria-label="Закрыть"><span>×</span></button>
+              <div class="back-title">${event.title}</div>
+              <div class="back-text"><b>${event.date}, ${event.day}</b><br>${event.description}</div>
+              <div class="back-actions">
+                <a href="${event.registerUrl}">Зарегистрироваться</a>
+                <a class="secondary" href="${event.detailsUrl}">Подробнее</a>
+              </div>
+            </div>
+          </div>
+        </article>
+      `;
+      }
+
+      function render(tab = "all") {
+        const filtered =
+          tab === "all"
+            ? EVENTS
+            : EVENTS.filter((event) => event.category === tab);
+        const rows = chunkRows(filtered);
+        const isStatic = filtered.length < 10;
+
+        grid.innerHTML = rows
+          .map((row, index) => {
+            const cards = isStatic ? row : [...row, ...row, ...row, ...row];
+
+            return `
+          <div class="marquee-row ${index === 1 ? "reverse" : ""} ${isStatic ? "is-static" : ""}" style="--speed:${214 + index * 7}s">
+            ${cards.map(cardTemplate).join("")}
+          </div>
+        `;
+          })
+          .join("");
+
+        desc.textContent = DESCRIPTIONS[tab];
+        desc.classList.toggle("is-visible", tab !== "all");
+      }
+
+      function goEvents() {
+        page.classList.add("show-events");
+      }
+
+      function goHero() {
+        page.classList.remove("show-events");
+      }
+
+      window.addEventListener(
+        "wheel",
+        (event) => {
+          if (lock) return;
+          lock = true;
+
+          if (event.deltaY > 0) goEvents();
+          else goHero();
+
+          setTimeout(() => (lock = false), 950);
+        },
+        { passive: true },
+      );
+
+      document.getElementById("goEvents").addEventListener("click", goEvents);
+
+      document.addEventListener("click", (event) => {
+        const tab = event.target.closest(".tab");
+        if (tab) {
+          document
+            .querySelectorAll(".tab")
+            .forEach((item) => item.classList.remove("is-active"));
+          document
+            .querySelectorAll(`.tab[data-tab="${tab.dataset.tab}"]`)
+            .forEach((item) => item.classList.add("is-active"));
+          render(tab.dataset.tab);
+          return;
+        }
+
+        const close = event.target.closest(".close-card");
+        if (close) {
+          closeCard();
+          return;
+        }
+
+        const card = event.target.closest(".event-card");
+        if (card && !event.target.closest("a")) {
+          openCard(card);
+        }
+      });
+
+      function openCard(card) {
+        closeCard();
+
+        sourceCard = card;
+        sourceCard.classList.add("is-source-hidden");
+
+        openedCard = card.cloneNode(true);
+        openedCard.classList.add("is-modal", "is-flipped");
+        openedCard.classList.remove("is-source-hidden");
+
+        page.appendChild(openedCard);
+        page.classList.add("has-open-card");
+      }
+
+      function closeCard() {
+        if (openedCard) {
+          openedCard.remove();
+        }
+
+        if (sourceCard) {
+          sourceCard.classList.remove("is-source-hidden");
+        }
+
+        openedCard = null;
+        sourceCard = null;
+        page.classList.remove("has-open-card");
+      }
+
+      document.addEventListener("mouseover", (event) => {
+        if (page.classList.contains("has-open-card")) return;
+
+        const card = event.target.closest(".event-card");
+
+        document.querySelectorAll(".marquee-row").forEach((row) => {
+          row.classList.remove("is-paused", "is-hovered");
+        });
+
+        if (card) {
+          card
+            .closest(".marquee-row")
+            ?.classList.add("is-paused", "is-hovered");
+        }
+      });
+
+      document.addEventListener("mouseout", (event) => {
+        if (page.classList.contains("has-open-card")) return;
+
+        const leavingCard = event.target.closest(".event-card");
+
+        if (leavingCard) {
+          leavingCard
+            .closest(".marquee-row")
+            ?.classList.remove("is-paused", "is-hovered");
+        }
+      });
+
+      window.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+          closeCard();
+        }
+        if (event.key === "ArrowDown" || event.key === "PageDown") goEvents();
+        if (
+          event.key === "ArrowUp" ||
+          event.key === "PageUp" ||
+          event.key === "Escape"
+        )
+          goHero();
+      });
+
+      initSnake();
+      render();
+    </script>
+  </body>
+</html>
