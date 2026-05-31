@@ -16,7 +16,7 @@
       :root {
         --bg: #ececec;
         --blue: #8299b9;
-        --orange: #dc9f2a;
+        --orange: #dc7d2a;
         --green: #465417;
         --light: #eff3d1;
         --ink: #465417;
@@ -36,7 +36,202 @@
         color: var(--ink);
         overflow-x: hidden;
       }
-
+      main {
+        position: relative;
+        z-index: 1;
+      }
+      .theme-sky {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        overflow: hidden;
+        background: var(--bg);
+      }
+      .theme-layer {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        transition: opacity 0.9s ease-in-out;
+        will-change: opacity;
+      }
+      .theme-layer::before,
+      .theme-layer::after {
+        content: "";
+        position: absolute;
+        pointer-events: none;
+      }
+      body.theme-day .theme-layer.day-layer,
+      body.theme-evening .theme-layer.evening-layer {
+        opacity: 1;
+      }
+      .day-layer {
+        background:
+          radial-gradient(
+            circle at 18% 130px,
+            rgba(130, 153, 185, 0.2) 0 150px,
+            transparent 152px
+          ),
+          radial-gradient(
+            circle at 84% 140px,
+            #ffd84d 0 58px,
+            transparent 60px
+          ),
+          linear-gradient(180deg, #eaf8ff 0%, #ffffff 62%, #ececec 100%);
+      }
+      .day-layer::before {
+        width: 260px;
+        height: 120px;
+        left: 8%;
+        top: 245px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.74);
+      }
+      .day-layer::after {
+        width: 190px;
+        height: 90px;
+        right: 20%;
+        top: 310px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.58);
+      }
+      .evening-layer {
+        background:
+          radial-gradient(
+            circle at 78% 145px,
+            #fff4cf 0 34px,
+            transparent 36px
+          ),
+          radial-gradient(
+            circle at 14% 18%,
+            rgba(255, 255, 255, 0.9) 0 1.5px,
+            transparent 2px
+          ),
+          radial-gradient(
+            circle at 28% 42%,
+            rgba(255, 255, 255, 0.78) 0 1px,
+            transparent 1.6px
+          ),
+          radial-gradient(
+            circle at 64% 30%,
+            rgba(255, 255, 255, 0.9) 0 1.4px,
+            transparent 2px
+          ),
+          radial-gradient(
+            circle at 88% 56%,
+            rgba(255, 255, 255, 0.75) 0 1px,
+            transparent 1.8px
+          ),
+          radial-gradient(
+            circle at 46% 76%,
+            rgba(255, 255, 255, 0.72) 0 1.2px,
+            transparent 2px
+          ),
+          linear-gradient(
+            165deg,
+            #10203f 0%,
+            #14335f 34%,
+            #244a78 58%,
+            #a34163 77%,
+            #f05f3f 100%
+          );
+      }
+      .evening-layer::before {
+        width: 3px;
+        height: 3px;
+        left: 0;
+        top: 0;
+        border-radius: 50%;
+        background: #fff8dc;
+        box-shadow:
+          7vw 12vh 0 #fff8dc,
+          18vw 28vh 0 #fff8dc,
+          29vw 8vh 0 #fff8dc,
+          41vw 24vh 0 #fff8dc,
+          53vw 14vh 0 #fff8dc,
+          66vw 32vh 0 #fff8dc,
+          74vw 10vh 0 #fff8dc,
+          91vw 25vh 0 #fff8dc,
+          12vw 48vh 0 rgba(255, 248, 220, 0.85),
+          25vw 63vh 0 rgba(255, 248, 220, 0.75),
+          36vw 53vh 0 rgba(255, 248, 220, 0.9),
+          49vw 68vh 0 rgba(255, 248, 220, 0.72),
+          61vw 48vh 0 rgba(255, 248, 220, 0.86),
+          82vw 64vh 0 rgba(255, 248, 220, 0.76),
+          94vw 54vh 0 rgba(255, 248, 220, 0.88),
+          8vw 82vh 0 rgba(255, 248, 220, 0.7),
+          22vw 92vh 0 rgba(255, 248, 220, 0.86),
+          39vw 84vh 0 rgba(255, 248, 220, 0.76),
+          58vw 91vh 0 rgba(255, 248, 220, 0.82),
+          73vw 78vh 0 rgba(255, 248, 220, 0.7),
+          89vw 88vh 0 rgba(255, 248, 220, 0.84);
+      }
+      .evening-layer::after {
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        background-image:
+          radial-gradient(
+            circle at 10% 35%,
+            rgba(255, 255, 255, 0.45) 0 1px,
+            transparent 1.7px
+          ),
+          radial-gradient(
+            circle at 33% 18%,
+            rgba(255, 255, 255, 0.5) 0 1px,
+            transparent 1.8px
+          ),
+          radial-gradient(
+            circle at 52% 58%,
+            rgba(255, 255, 255, 0.38) 0 1px,
+            transparent 1.6px
+          ),
+          radial-gradient(
+            circle at 79% 42%,
+            rgba(255, 255, 255, 0.42) 0 1px,
+            transparent 1.7px
+          ),
+          radial-gradient(
+            circle at 96% 74%,
+            rgba(255, 255, 255, 0.45) 0 1px,
+            transparent 1.7px
+          );
+        opacity: 0.9;
+      }
+      .confetti-layer {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        overflow: hidden;
+        opacity: 0;
+        transition: opacity 0.25s ease;
+      }
+      body.theme-fest .confetti-layer {
+        opacity: 1;
+      }
+      .confetti {
+        position: absolute;
+        left: var(--x);
+        top: -24px;
+        width: var(--w);
+        height: var(--h);
+        border-radius: 3px;
+        background: var(--c);
+        animation: confettiFall var(--d) linear infinite;
+        animation-delay: var(--delay);
+        transform: rotate(var(--rot));
+      }
+      @keyframes confettiFall {
+        0% {
+          transform: translate3d(0, -40px, 0) rotate(var(--rot));
+        }
+        100% {
+          transform: translate3d(var(--drift), calc(100vh + 80px), 0)
+            rotate(calc(var(--rot) + 420deg));
+        }
+      }
       img {
         max-width: 100%;
         display: block;
@@ -69,6 +264,9 @@
         flex-direction: column;
         justify-content: space-between;
         z-index: 2;
+      }
+      .hero-head {
+        letter-spacing: 0.04em;
       }
       .hero-kicker {
         display: flex;
@@ -116,7 +314,7 @@
         font-family: Soledago;
         color: var(--blue);
         text-transform: uppercase;
-        letter-spacing: -0.045em;
+        letter-spacing: 0.04em;
       }
       .description h2 {
         font-family: Soledago;
@@ -178,14 +376,15 @@
         color: var(--blue);
       }
       .photo {
-        min-height: 280px;
+        height: 100%;
+        width: 100%;
         display: grid;
         place-items: center;
         background: rgba(255, 255, 255, 0.26);
         position: relative;
         overflow: hidden;
       }
-      .photo::before {
+      /* .photo::before {
         content: "";
         width: 78%;
         aspect-ratio: 4/3;
@@ -200,7 +399,7 @@
         font-weight: 950;
         letter-spacing: 0.12em;
         opacity: 0.72;
-      }
+      } */
       .direction-content {
         padding: 40px;
         display: flex;
@@ -213,7 +412,7 @@
         margin: 0 0 16px;
         font-size: clamp(32px, 4.4vw, 58px);
         line-height: 0.95;
-        letter-spacing: -0.05em;
+        letter-spacing: 0.04em;
         text-transform: uppercase;
         color: inherit;
       }
@@ -269,6 +468,13 @@
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         gap: 18px;
+        transition:
+          opacity 0.25s ease,
+          transform 0.25s ease;
+      }
+      .events-grid.is-changing {
+        opacity: 0;
+        transform: translateY(10px);
       }
       .event-card {
         min-height: 188px;
@@ -282,10 +488,21 @@
         flex-direction: column;
         justify-content: space-between;
         gap: 20px;
-        transition: transform 0.2s ease;
+        opacity: 0;
+        transform: translateY(14px);
+        transition:
+          opacity 0.45s ease,
+          transform 0.45s ease,
+          background-color 0.35s ease,
+          color 0.35s ease,
+          border-radius 0.3s ease;
         cursor: pointer;
       }
-      .event-card:hover {
+      .event-card.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .event-card.is-visible:hover {
         transform: translateY(-3px);
       }
       .event-card:focus-visible,
@@ -443,11 +660,11 @@
         cursor: pointer;
       }
       @media (max-width: 980px) {
-        #backImg {
-          display: none;
-        }
         .page {
           width: min(100% - 28px, 760px);
+        }
+        #backImg {
+          display: none;
         }
         .hero {
           padding: 18px 0 24px;
@@ -541,26 +758,30 @@
     </style>
   </head>
   <body>
+    <div class="theme-sky" aria-hidden="true">
+      <div class="theme-layer day-layer"></div>
+      <div class="theme-layer evening-layer"></div>
+    </div>
+    <div class="confetti-layer" id="confettiLayer" aria-hidden="true"></div>
     <main>
       <img src="./back.png" id="backImg" />
       <section class="hero">
         <div class="page hero-grid">
           <div class="hero-top">
             <div class="hero-kicker">
-              <span>Фестиваль</span
-              ><span class="hero-date">1 июня — 31 августа</span>
+              <span class="hero-date">1 июня — 31 августа</span>
             </div>
             <div>
-              <h1>ЛЕТО<br />В РМИ</h1>
-              <p class="hero-subtitle">Фестиваль для детей и молодежи</p>
+              <h1 class="hero-head">ЛЕТО<br />В РМИ</h1>
+              <p class="hero-subtitle">Программа для жителей города</p>
             </div>
           </div>
           <div class="description">
             <p>
-              «Лето в РМИ» — единственный в Тверской области Фестиваль, который
-              длится все лето. В программе — регулярные культурно-массовые
-              мероприятия для всей семьи: от уличных кинопоказов до спортивных
-              состязаний.
+              «Лето в РМИ» — единственная в Тверской области программа открытых
+              мероприятий, которая длится все лето. В программе — регулярные
+              культурно-массовые события для всей семьи: от уличных кинопоказов
+              до спортивных состязаний
             </p>
           </div>
         </div>
@@ -570,19 +791,30 @@
         <h2 class="section-title">Что вас ждет</h2>
         <div class="directions">
           <article class="direction day">
-            <div class="photo" aria-label="Фото дневной программы"></div>
+            <img
+              class="photo"
+              aria-label="Фото дневной программы"
+              src="./assets/images/program/day.jpg"
+              alt="Фото дневной программы"
+            />
             <div class="direction-content">
               <h3>Дневная программа</h3>
               <p>
                 Время для тех, кто хочет провести день в движении и научиться
                 чему-то новому. В программе: командные турниры по стрельбе из
                 водных пистолетов, заезды на радиоуправляемых машинках,
-                мастер-классы и открытые спортивные тренировки.
+                мастер-классы и открытые спортивные тренировки
               </p>
             </div>
           </article>
           <article class="direction evening">
-            <div class="photo" aria-label="Фото вечерней программы"></div>
+            <img
+              class="photo"
+              aria-label="Фото вечерней программы"
+              class="photo"
+              src="./assets/images/program/evening.jpg"
+              alt="Фото вечерней программы"
+            />
             <div class="direction-content">
               <h3>Вечерняя программа</h3>
               <p>
@@ -590,12 +822,17 @@
                 провести время с близкими в комфортной атмосфере. В программе:
                 показы фильмов и мультфильмов под открытым небом, музыкальные
                 вечера с прослушиванием старого винила, ламповые встречи и песни
-                под гитару.
+                под гитару
               </p>
             </div>
           </article>
           <article class="direction fest">
-            <div class="photo" aria-label="Фото фестивалей"></div>
+            <img
+              class="photo"
+              aria-label="Фото фестивалей"
+              src="./assets/images/program/fest.jpg"
+              alt="Фото фестивалей"
+            />
             <div class="direction-content">
               <h3>Фестивали</h3>
               <p>
@@ -649,7 +886,7 @@
           title: "Фестиваль детства и юности",
           kind: "fest",
           description:
-            "Большое открытие летней программы для детей, молодежи и всей семьи на площадках Исторического парка.",
+            "Большое открытие летней программы для детей, молодежи и всей семьи на площадках Исторического парка",
           schedule: "1 июня · подробное время уточняется",
         },
         {
@@ -657,7 +894,7 @@
           title: "Открытие выставки «150 артистов»",
           kind: "fest",
           description:
-            "Выставочный проект в рамках летнего фестиваля с работами участников и специальной программой открытия.",
+            "Выставочный проект в рамках летнего фестиваля с работами участников и специальной программой открытия",
           schedule: "2 июня · подробное время уточняется",
         },
         {
@@ -665,7 +902,7 @@
           title: "Литературная песочница",
           kind: "day",
           description:
-            "Дневная встреча для детей и молодежи: чтение, творческие задания и живой формат знакомства с литературой.",
+            "Дневная встреча для детей и молодежи: чтение, творческие задания и живой формат знакомства с литературой",
           schedule: "3 июня · дневная программа",
         },
         {
@@ -673,7 +910,7 @@
           title: "Показ фильма",
           kind: "evening",
           description:
-            "Вечерний кинопоказ под открытым небом в спокойной атмосфере для отдыха после учебы и работы.",
+            "Вечерний кинопоказ под открытым небом в спокойной атмосфере для отдыха после учебы и работы",
           schedule: "4 июня · вечерняя программа",
         },
         {
@@ -681,7 +918,7 @@
           title: "Дворовые игры Первые",
           kind: "day",
           description:
-            "Активные командные игры на свежем воздухе с понятными правилами и динамичным участием.",
+            "Активные командные игры на свежем воздухе с понятными правилами и динамичным участием",
           schedule: "5 июня · дневная программа",
         },
         {
@@ -689,7 +926,7 @@
           title: "Творческий вечер под гитару",
           kind: "evening",
           description:
-            "Ламповая вечерняя встреча с живым исполнением, песнями и общением.",
+            "Ламповая вечерняя встреча с живым исполнением, песнями и общением",
           schedule: "5 июня · вечерняя программа",
         },
         {
@@ -697,14 +934,14 @@
           title: "Игротека Внастолку",
           kind: "day",
           description:
-            "Настольные игры для разных возрастов: быстрые партии, командное взаимодействие и семейный формат.",
+            "Настольные игры для разных возрастов: быстрые партии, командное взаимодействие и семейный формат",
           schedule: "6 июня · дневная программа",
         },
         {
           date: "6 июня",
           title: "Показ фильма",
           kind: "evening",
-          description: "Открытый вечерний кинопоказ для гостей фестиваля.",
+          description: "Открытый вечерний кинопоказ для гостей фестиваля",
           schedule: "6 июня · вечерняя программа",
         },
         {
@@ -712,7 +949,7 @@
           title: "Фестиваль сказок",
           kind: "fest",
           description:
-            "Крупное семейное событие с тематическими активностями, творческими зонами и атмосферой сказки.",
+            "Крупное семейное событие с тематическими активностями, творческими зонами и атмосферой сказки",
           schedule: "6 июня · фестивальная программа",
         },
         {
@@ -720,7 +957,7 @@
           title: "Тверская пробежка",
           kind: "day",
           description:
-            "Открытая спортивная активность для тех, кто хочет начать день в движении.",
+            "Открытая спортивная активность для тех, кто хочет начать день в движении",
           schedule: "7 июня · дневная программа",
         },
         {
@@ -728,7 +965,7 @@
           title: "ТИР",
           kind: "day",
           description:
-            "Практическая дневная активность на меткость и концентрацию.",
+            "Практическая дневная активность на меткость и концентрацию",
           schedule: "8 июня · дневная программа",
         },
         {
@@ -736,7 +973,7 @@
           title: "Вотертаг",
           kind: "day",
           description:
-            "Командная игра со стрельбой из водных пистолетов: движение, азарт и летний формат.",
+            "Командная игра со стрельбой из водных пистолетов: движение, азарт и летний формат",
           schedule: "9 июня · дневная программа",
         },
         {
@@ -744,14 +981,14 @@
           title: "Литературная песочница",
           kind: "day",
           description:
-            "Творческий дневной формат с книгами, заданиями и игровой подачей.",
+            "Творческий дневной формат с книгами, заданиями и игровой подачей",
           schedule: "10 июня · дневная программа",
         },
         {
           date: "11 июня",
           title: "Показ фильма",
           kind: "evening",
-          description: "Вечерний кинопоказ на открытой площадке.",
+          description: "Вечерний кинопоказ на открытой площадке",
           schedule: "11 июня · вечерняя программа",
         },
         {
@@ -759,7 +996,7 @@
           title: "Турнир по гонкам машинок",
           kind: "day",
           description:
-            "Соревнование на радиоуправляемых машинках для участников и зрителей.",
+            "Соревнование на радиоуправляемых машинках для участников и зрителей",
           schedule: "11 июня · дневная программа",
         },
         {
@@ -767,7 +1004,7 @@
           title: "День России",
           kind: "fest",
           description:
-            "Праздничная программа ко Дню России на площадках фестиваля.",
+            "Праздничная программа ко Дню России на площадках фестиваля",
           schedule: "12 июня · фестивальная программа",
         },
         {
@@ -775,7 +1012,7 @@
           title: "Игротека Внастолку",
           kind: "day",
           description:
-            "Дневной блок настольных игр для семьи, детей и молодежи.",
+            "Дневной блок настольных игр для семьи, детей и молодежи",
           schedule: "13 июня · дневная программа",
         },
         {
@@ -783,7 +1020,7 @@
           title: "Показ фильма",
           kind: "evening",
           description:
-            "Кинопоказ в вечернем формате для спокойного завершения дня.",
+            "Кинопоказ в вечернем формате для спокойного завершения дня",
           schedule: "13 июня · вечерняя программа",
         },
         {
@@ -791,7 +1028,7 @@
           title: "Тверская пробежка",
           kind: "day",
           description:
-            "Спортивная встреча на свежем воздухе для активного начала дня.",
+            "Спортивная встреча на свежем воздухе для активного начала дня",
           schedule: "14 июня · дневная программа",
         },
         {
@@ -799,7 +1036,7 @@
           title: "Йога / пилатес / растяжка",
           kind: "day",
           description:
-            "Открытая тренировка на гибкость, восстановление и мягкую физическую активность.",
+            "Открытая тренировка на гибкость, восстановление и мягкую физическую активность",
           schedule: "14 июня · дневная программа",
         },
         {
@@ -807,7 +1044,7 @@
           title: "ТИР",
           kind: "day",
           description:
-            "Дневная активность на точность, реакцию и соревновательный интерес.",
+            "Дневная активность на точность, реакцию и соревновательный интерес",
           schedule: "15 июня · дневная программа",
         },
         {
@@ -815,7 +1052,7 @@
           title: "Детский DJ-сет",
           kind: "evening",
           description:
-            "Музыкальный вечерний формат для детей и семейной аудитории.",
+            "Музыкальный вечерний формат для детей и семейной аудитории",
           schedule: "15 июня · вечерняя программа",
         },
         {
@@ -823,7 +1060,7 @@
           title: "Большая игра в казаков-разбойников",
           kind: "day",
           description:
-            "Большая командная игра на территории площадки с активным движением и понятной механикой.",
+            "Большая командная игра на территории площадки с активным движением и понятной механикой",
           schedule: "16 июня · дневная программа",
         },
         {
@@ -831,7 +1068,7 @@
           title: "Показ фильма",
           kind: "evening",
           description:
-            "Открытый вечерний кинопоказ в рамках регулярной программы.",
+            "Открытый вечерний кинопоказ в рамках регулярной программы",
           schedule: "18 июня · вечерняя программа",
         },
         {
@@ -839,7 +1076,7 @@
           title: "Дворовые игры Первые",
           kind: "day",
           description:
-            "Дневные командные активности и знакомые дворовые игры в современном фестивальном формате.",
+            "Дневные командные активности и знакомые дворовые игры в современном фестивальном формате",
           schedule: "18 июня · дневная программа",
         },
         {
@@ -847,7 +1084,7 @@
           title: "Турнир по уличному волейболу",
           kind: "day",
           description:
-            "Спортивный турнир для участников, которые любят командную игру и летнюю динамику.",
+            "Спортивный турнир для участников, которые любят командную игру и летнюю динамику",
           schedule: "19 июня · дневная программа",
         },
         {
@@ -855,7 +1092,7 @@
           title: "Винил + роспись DVD-дисков",
           kind: "evening",
           description:
-            "Вечерняя творческая встреча с музыкой, винилом и кастомизацией дисков.",
+            "Вечерняя творческая встреча с музыкой, винилом и кастомизацией дисков",
           schedule: "19 июня · вечерняя программа",
         },
         {
@@ -863,7 +1100,7 @@
           title: "МК по современным танцам",
           kind: "day",
           description:
-            "Мастер-класс по современным танцам для тех, кто хочет попробовать новые движения.",
+            "Мастер-класс по современным танцам для тех, кто хочет попробовать новые движения",
           schedule: "21 июня · дневная программа",
         },
         {
@@ -871,7 +1108,7 @@
           title: "ТИР",
           kind: "day",
           description:
-            "Практическая активность на меткость в дневной программе фестиваля.",
+            "Практическая активность на меткость в дневной программе фестиваля",
           schedule: "22 июня · дневная программа",
         },
         {
@@ -879,7 +1116,7 @@
           title: "Планер",
           kind: "day",
           description:
-            "Дневная творческая или техническая активность в рамках летней программы.",
+            "Дневная творческая или техническая активность в рамках летней программы",
           schedule: "22 июня · дневная программа",
         },
         {
@@ -887,7 +1124,7 @@
           title: "Турнир по гонкам машинок",
           kind: "day",
           description:
-            "Состязание на радиоуправляемых машинках с азартной турнирной механикой.",
+            "Состязание на радиоуправляемых машинках с азартной турнирной механикой",
           schedule: "23 июня · дневная программа",
         },
         {
@@ -895,7 +1132,7 @@
           title: "МК: обвесы из быстросохнущей глины",
           kind: "day",
           description:
-            "Творческий мастер-класс по созданию декоративных элементов из быстросохнущей глины.",
+            "Творческий мастер-класс по созданию декоративных элементов из быстросохнущей глины",
           schedule: "24 июня · дневная программа",
         },
         {
@@ -903,7 +1140,7 @@
           title: "Показ фильма",
           kind: "evening",
           description:
-            "Вечерний кинопоказ под открытым небом для гостей фестиваля.",
+            "Вечерний кинопоказ под открытым небом для гостей фестиваля",
           schedule: "25 июня · вечерняя программа",
         },
         {
@@ -911,7 +1148,7 @@
           title: "Вотертаг",
           kind: "day",
           description:
-            "Летняя командная игра с водными пистолетами и активным движением.",
+            "Летняя командная игра с водными пистолетами и активным движением",
           schedule: "25 июня · дневная программа",
         },
         {
@@ -919,7 +1156,7 @@
           title: "Подкаст с тверскими блогерами",
           kind: "evening",
           description:
-            "Вечерняя встреча в формате живого разговора с локальными авторами и блогерами.",
+            "Вечерняя встреча в формате живого разговора с локальными авторами и блогерами",
           schedule: "26 июня · вечерняя программа",
         },
         {
@@ -927,7 +1164,7 @@
           title: "День молодежи",
           kind: "fest",
           description:
-            "Крупное событие ко Дню молодежи с насыщенной программой для участников фестиваля.",
+            "Крупное событие ко Дню молодежи с насыщенной программой для участников фестиваля",
           schedule: "27 июня · фестивальная программа",
         },
         {
@@ -935,7 +1172,7 @@
           title: "Творческий вечер под гитару",
           kind: "evening",
           description:
-            "Атмосферная встреча с песнями под гитару и живым общением.",
+            "Атмосферная встреча с песнями под гитару и живым общением",
           schedule: "28 июня · вечерняя программа",
         },
         {
@@ -943,7 +1180,7 @@
           title: "Молодежный DJ-сет",
           kind: "evening",
           description:
-            "Музыкальная вечерняя программа с DJ-сетом для молодежной аудитории.",
+            "Музыкальная вечерняя программа с DJ-сетом для молодежной аудитории",
           schedule: "30 июня · вечерняя программа",
         },
       ];
@@ -960,18 +1197,63 @@
       const modalTitle = document.querySelector("#modalTitle");
       const modalDescription = document.querySelector("#modalDescription");
       const modalSchedule = document.querySelector("#modalSchedule");
+      const confettiLayer = document.querySelector("#confettiLayer");
+      const themeClasses = ["theme-day", "theme-evening", "theme-fest"];
+
+      function createConfetti() {
+        const colors = ["#8299B9", "#DC7D2A", "#465417", "#EFF3D1", "#ffffff"];
+        confettiLayer.innerHTML = Array.from({ length: 90 }, (_, index) => {
+          const width = 7 + Math.round(Math.random() * 8);
+          const height = 9 + Math.round(Math.random() * 12);
+          const x = Math.round(Math.random() * 100);
+          const drift = Math.round(Math.random() * 140 - 70);
+          const duration = (5 + Math.random() * 5).toFixed(2);
+          const delay = (-Math.random() * 8).toFixed(2);
+          const rotate = Math.round(Math.random() * 360);
+          const color = colors[index % colors.length];
+          return `<span class="confetti" style="--x:${x}%;--w:${width}px;--h:${height}px;--d:${duration}s;--delay:${delay}s;--rot:${rotate}deg;--drift:${drift}px;--c:${color}"></span>`;
+        }).join("");
+      }
+
+      function setPageTheme(type) {
+        document.body.classList.remove(...themeClasses);
+        if (type === "day") document.body.classList.add("theme-day");
+        if (type === "evening") document.body.classList.add("theme-evening");
+        if (type === "fest") document.body.classList.add("theme-fest");
+      }
 
       function render(type = "all") {
         grid.innerHTML = events
           .filter((event) => type === "all" || event.kind === type)
           .map(
-            (event, index) => `
+            (event) => `
         <button class="event-card ${event.kind}" type="button" data-index="${events.indexOf(event)}">
           <div><div class="event-date">${event.date}</div><h3 class="event-title">${event.title}</h3></div>
           <span class="event-tag">${labels[event.kind]}</span>
         </button>`,
           )
           .join("");
+
+        const cards = grid.querySelectorAll(".event-card");
+
+        requestAnimationFrame(() => {
+          cards.forEach((card, index) => {
+            card.style.transitionDelay = `${Math.min(index * 45, 360)}ms`;
+            card.classList.add("is-visible");
+          });
+        });
+      }
+
+      function switchEvents(type) {
+        grid.classList.add("is-changing");
+
+        window.setTimeout(() => {
+          render(type);
+
+          requestAnimationFrame(() => {
+            grid.classList.remove("is-changing");
+          });
+        }, 250);
       }
 
       function openModal(event) {
@@ -1010,9 +1292,12 @@
         button.addEventListener("click", () => {
           buttons.forEach((i) => i.classList.remove("active"));
           button.classList.add("active");
-          render(button.dataset.type);
+          setPageTheme(button.dataset.type);
+          switchEvents(button.dataset.type);
         }),
       );
+      createConfetti();
+      setPageTheme("all");
       render();
     </script>
   </body>
